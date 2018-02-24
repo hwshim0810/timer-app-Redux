@@ -5,13 +5,32 @@ import Button from '../Button';
 
 
 class Timer extends Component {
+
+    // Components 가 새로운 Props 를 얻을 때
+    componentWillReceiveProps(nextProps) {
+        const currentProps = this.props;
+
+        if (!currentProps.isPlaying && nextProps.isPlaying) {
+            const timerInterval = setInterval(() => {
+                currentProps.addSecond()
+            }, 1000);
+
+            this.setState({
+                timerInterval
+            });
+        } else if (currentProps.isPlaying && !nextProps.isPlaying) {
+            clearInterval(this.state.timerInterval);
+        }
+    }
+
     render() {
         const  { 
             isPlaying, 
             elapsedTime, 
             timerDuration,
             startTimer,
-            restartTimer
+            restartTimer,
+            addSecond
         } = this.props;
 
         return (
