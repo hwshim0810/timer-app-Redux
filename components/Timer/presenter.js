@@ -4,6 +4,16 @@ import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import Button from '../Button';
 
 
+function formatTime(time) {
+    if (parseInt(time) < 0) return '00:00';
+
+    let minute = Math.floor(time/60);
+    let second = parseInt(time % 60, 10);
+    
+    return `${minute < 10 ? `0${minute}`: minute}:${second < 10 ? `0${second}`: second}`;
+}
+
+
 class Timer extends Component {
 
     // Components 가 새로운 Props 를 얻을 때
@@ -38,7 +48,7 @@ class Timer extends Component {
                 <StatusBar barStyle={"light-content"} />
                 <View style={styles.upper}>
                     <Text style={styles.time}>
-                        25:00
+                        {formatTime(timerDuration - elapsedTime)}
                     </Text>
                 </View>
                 <View style={styles.lower}>
